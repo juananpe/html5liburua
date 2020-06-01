@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser')
+const mongojs = require('mongojs')
+const db = mongojs('bezeroakdb', ['bezeroak'])
 
 const app = express();
 
@@ -12,39 +14,37 @@ app.set('views', path.join(__dirname, 'views'));
 // parse  application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
-let bezeroak = [
-    {
-        id: 1,
-        izena: 'Ane',
-        abizena: 'Uriarte',
-        email: 'ane@ni.eus'
-    },
-    {
-        id: 2,
-        izena: 'Jon',
-        abizena: 'Juanenea',
-        email: 'jon@ni.eus'
-    },
-    {
-        id: 3,
-        izena: 'Oihane',
-        abizena: 'Lete',
-        email: 'oihane@ni.eus'
-    },
-]
-
 app.get("/", function(req, res) {
-    res.render('index', {
-        'izenburua': 'EJS probatzen',
-        'bezeroak': bezeroak
+    db.bezeroak.find( function (err, docs) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(docs);
+            res.render('index', {
+                'izenburua': 'EJS probatzen',
+                'bezeroak': docs
+            })
+        }
     })
 });
 
-app.post('/bezeroa', function(req, res, next) {
-    console.log("Entrando");
-    res.send("Bezeroaren izena:" + req.body.izena);
-    // console.log(req.text); // raw
-    // next();
+app.post('/bezeroa', function(req, res) {
+    const bezeroBerria =  {
+        izena : req.body.izena,
+        abizena: req.body.abizena,
+        email: req.body.email
+    };
+
+    console.log(bezeroBerria);
+
+    db.bezeroak.insert( bezeroBerria, function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            db.bezeroak.insert( bezeroBerria );
+            res.redirect('/');
+        }
+    })
 })
 
 app.get('/bezeroa', function(req, res) {
