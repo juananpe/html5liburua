@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=izenburua%></title>
+</head>
+<body>
+    Kaixo EJS txantiloi kudeatzailetik
+    <ul>
+        <% bezeroak.forEach( function(bezeroa) { %>
+        <li><%=bezeroa.izena %> <%=bezeroa.abizena%></li>
+        <% }) %>
+    </ul>
+</body>
+</html>
