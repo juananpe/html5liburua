@@ -5,7 +5,16 @@
     <title><%=izenburua%></title>
 </head>
 <body>
-    Kaixo EJS txantiloi kudeatzailetik
+
+<h2>Bezero berri bat txertatu/editatu</h2>
+<form action="/bezeroa" method="POST">
+    Izena: <input type="text" name="izena"> <br>
+    Abizena:	<input type="text" name="abizena"> <br>
+    Email: <input type="text" name="email"> <br>
+    <input type="submit" value="Gorde">
+</form>
+
+<h2>Bezero zerrenda</h2>
     <ul>
         <% bezeroak.forEach( function(bezeroa) { %>
         <li><%=bezeroa.izena %> <%=bezeroa.abizena%></li>
