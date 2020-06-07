@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=izenburua%></title>
+</head>
+<body>
+
+<h2>Bezero berri bat editatu</h2>
+<form action="/bezeroa" method="POST">
+    Izena: <input type="text" name="izena" value="<%=bezeroa.izena%>"> <br>
+    Abizena:	<input type="text" name="abizena" value="<%=bezeroa.abizena%>"> <br>
+    Email: <input type="text" name="email" value="<%=bezeroa.email%>"> <br>
+    <input type="hidden" name="_id" value="<%=bezeroa._id%>">
+    <input type="submit" value="Editatu">
+</form>
+</body>
+</html>

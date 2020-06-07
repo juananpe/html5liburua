@@ -17,7 +17,9 @@
 <h2>Bezero zerrenda</h2>
     <ul>
         <% bezeroak.forEach( function(bezeroa) { %>
-        <li><%=bezeroa.izena %> <%=bezeroa.abizena%></li>
+        <li><%=bezeroa.izena %> <%=bezeroa.abizena%>
+            <a href="/bezeroa/editatu/<%=bezeroa._id%>">Editatu</a>
+            <a href="/bezeroa/ezabatu/<%=bezeroa._id%>">Ezabatu</a> </li>
         <% }) %>
     </ul>
 </body>

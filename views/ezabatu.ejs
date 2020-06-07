@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=izenburua%></title>
+</head>
+<body>
+
+<h3>Ziur bezero hau ezabatu nahi duzula?</h3>
+<form action="/bezeroa/ezabatu" method="POST">
+    Izena: <input type="text" name="izena" value="<%=bezeroa.izena%>" readonly> <br>
+    Abizena:	<input type="text" name="abizena" value="<%=bezeroa.abizena%>" readonly> <br>
+    Email: <input type="text" name="email" value="<%=bezeroa.email%>"  readonly> <br>
+    <input type="hidden" name="_id" value="<%=bezeroa._id%>">
+    <input type="button" onclick="location.href='/'" value="Deuseztatu">
+    <input type="submit" value="Ezabatu">
+</form>
+</body>
+</html>
