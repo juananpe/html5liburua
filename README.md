@@ -10,3 +10,11 @@ praktikan nola erabil daitezkeen ikasteko oinarrizko kontzeptuak jorratzen dira.
 
 Liburu hau, HTML5en inguruan ematen diren eskoletan – unibertsitatean, zikloetan edo bakarka ikasten dutenen kasuan ere - euskarri 
 digital gisa erabilzeko prestatu da.
+
+# Nola konpilatu liburua (PDFa sortzeko)
+
+```
+$ cd latex
+$ pdflatex main.tex
+$ open main.pdf
+```
