@@ -16,5 +16,6 @@ digital gisa erabilzeko prestatu da.
 ```
 $ cd latex
 $ pdflatex main.tex
+$ pdflatex main.tex # Birritan konpilatu behar da Gaien Aurkibidea sortu ahal izateko
 $ open main.pdf
 ```
