@@ -13,9 +13,11 @@ digital gisa erabilzeko prestatu da.
 
 # Nola konpilatu liburua (PDFa sortzeko)
 
+Oharra: pdflatex birritan konpilatu behar da Gaien Aurkibidea sortu ahal izateko
+
 ```
 $ cd latex
 $ pdflatex main.tex
-$ pdflatex main.tex # Birritan konpilatu behar da Gaien Aurkibidea sortu ahal izateko
+$ pdflatex main.tex 
 $ open main.pdf
 ```
