@@ -1,0 +1,175 @@
+\chapter{Objektuetara zuzendutako programazioa JavaScript-en}
+
+\section{Klaseak JavaScript-en}
+JavaScript ez da berez objektuetara zuzendutako programazio (OZP) lengoaia bat, baizik prototipoetan oinarritutakoa. Azken paradigma hori erabilita badago objektuak, herentzia, klaseak, etab. sortzea. Alegia, posible da objektuetara zuzendutako programazio-paradigmari jarraitzea, JavaScript-en helburua beste bat bada ere. Dena den, OZPa hain arrakastatsua bilakatu da JSn, non \index{ECMAScript}\index{ES2015} ECMAScript 2015\footnote{\href{https://262.ecma-international.org/6.0/}{https://262.ecma-international.org/6.0/}} bertsioan klaseak modu erraz batean programatzeko sintaxia onartu baitzen. Sintaxi berri horren bidez, klaseak, objektuak eta klaseen arteko herentzia inplementatzeko kodea erraztu egiten da erabat.
+
+\subsection{Klaseen erazagupena}
+
+Lauki izeneko klase bat erazagutzeko honako egiturari jarraituko diogu:
+
+\index{class}
+
+\begin{lstlisting}[language=JavaScript, numbers=none]
+class Lauki {
+  constructor(altuera, zabalera) {
+    this.altuera = altuera;
+    this.zabalera = zabalera;
+  }
+}
+\end{lstlisting}
+
+\index{constructor}\index{this}
+Adibidean, Lauki klaseak eraikitzaile metodo bat dauka, \hlc[lightgray]{constructor} izenekoa (eraikitzailea beti deituko da \textit{constructor}). Barruan bi atributu deklaratu dira: altuera eta zabalera. Ohart zaitez atributuak erazagutzeko \hl{this} gako-hitza erabili dela, hots, \textit{this.altuera} eta \textit{this.zabalera}. Atributu hauen balioak esleitzeko, eraikitzaileari  parametro gisa pasatu dizkiogun aldagaien balioak erabili ditugu.
+
+\index{new}
+Berez, JSn, klase (\hl{class}) bat funtzio berezi bat besterik ez da. Funtzio horri \hl{new} gako-hitza erabiliz deitzen badiogu, funtzio horrek irudikatzen duen klasea instantziatuko dugu, objektua sortuz. Adibidez, Lauki klaseko laukia izeneko objektu bat instantziatzeko:
+
+\begin{lstlisting}[language=JavaScript, numbers=none]
+let laukia = new Lauki(3,4);
+\end{lstlisting}
+
+Funtzio arruntetan gertatzen den lez, klase-espresioak ere erabil daitezke:
+\begin{lstlisting}[language=JavaScript, numbers=none]
+let laukiKlasea = class Lauki {
+  constructor(altuera, zabalera) {
+    this.altuera = altuera;
+    this.zabalera = zabalera;
+  }
+};
+
+let laukia = new laukiKlasea(3,4);
+\end{lstlisting}
+
+\subsection{Get metodoak}
+\index{get()}
+\index{set()}
+
+Hurrengo adibidean \textit{zabalera()} metodoa \hlc[lightgray]{get} hitzaz apaindu dugu. \hlc[lightgray]{get} gako-hitza da, sintaxia errazteko beste teknika bat. Horrela, \textit{laukia.zabaleraKalkulatu()} bezalako deia erabili ordez, zuzenean \textit{laukia.zabalera} erabili ahalko dugu. Gauza bera \hl{set} metodo bereziarekin. \hl{set} metodo bat erazagutuz, posible da balio bat esleitzea edozein atributuri modu laburrean (adib. \textit{laukia.altuera = 10;})
+
+\begin{lstlisting}[language=JavaScript, numbers=none]
+class Lauki {
+  constructor(altuera, zabalera) {
+    this.altuera = altuera;
+    this.zabalera = zabalera;
+  }
+
+  set altuera(balioBerria) {
+     this.altuera = balioBerria;
+  }
+  
+  get zabalera() {
+    return this.zabaleraKalkulatu();
+  }
+
+  zabaleraKalkulatu() {
+    return this.altuera * this.zabalera;
+  }
+
+}
+const laukia = new Lauki(5, 10);
+console.log(laukia.zabalera); // (get metodoari deitu ondoren, emaitza=50)
+laukia.altuera = 2; // set 
+console.log(laukia.zabalera); // (get metodoari deitu ondoren, emaitza=20)
+
+\end{lstlisting}
+
+\subsection{Herentzia}
+
+\index{herentzia}
+\index{extends}
+\index{ES2015}
+Herentzia inplementatzeko sintaxia ere erraztu egin du ES2015 estandarrak, \hlc[lightgray]{extends} gako-hitzari esker.
+
+\begin{lstlisting}[language=JavaScript, numbers=none]
+class Karratu extends Lauki {
+   zabaleraKalkulatu(){
+       return this.altuera**2;
+   }
+   get alde() {
+      return this.altuera;
+   }
+}
+
+let karratu = new Karratu(10,10);
+console.log(karratu.alde); // 10
+console.log(karratu.zabalera); // 100
+
+\end{lstlisting}
+
+Ohart zaitez \textit{Karratu} klaseko \hl{zabaleraKalkulatu()} metodoan. Gainidatzitako metodo bat da, berez bere gurasoa (Lauki klasea) duen metodoa deuseztatu eta Laukiak bere metodo propioa inplementatzen du. Karratu klaseak \textit{set zabalera()} metodoa ere badu, Lauki klasetik heredatu egin duelako.
+
+\section{Ariketak}
+
+ Objektuetara zuzendutako programazioa erabili beharko duzu hainbat ariketa \newline JavaScript-en programatzeko.
+
+\index{map()}
+\index{filter()}
+\index{reduce()}
+\index{=>}
+\index{gezi funtzioa}
+\index{arrow}
+\begin{enumerate}
+\item ES6 sintaxia erabiliz, inplementatu Puntu izeneko klase bat, bi dimentsioko espazioan dagoen puntu bat irudikatzen duena. Puntu batek bi atributu ditu, \hl{x} eta \hl{y}, metodo eraikitzailetik pasatuko dizkiogunak. \textit{batu()} izeneko metodo bat ere badu, parametro gisa beste puntu bat hartzen duena eta emaitza gisa bi puntuen batura itzultzen duena. Alegia, beste puntu berri bat bueltatzen du, non x balioa bi puntuen x balioen batura den (eta gauza bera y puntuari dagokionez).
+
+Beraz, kode hau exekutatzean: 
+
+\begin{lstlisting}[language=JavaScript, numbers=none]
+console.log(new Puntu(1, 2).batu(new Puntu(2, 1)))
+\end{lstlisting}
+
+Pantailan honako emaitza jaso behar dugu:
+\begin{lstlisting}[language=JavaScript, numbers=none]
+Puntu{x: 3, y: 3}
+\end{lstlisting}
+
+\item Gehitu \textit{hurrengoa()} izeneko metodo bat kontagailu objektuari. Metodo horrek \hl{kont} aldagaiaren uneko balioa itzuli behar du eta unitate batean handitu (erabili \hl{++} eragilea)
+\begin{lstlisting}[language=JavaScript, numbers=none]
+let kontagailu = {
+ kont: 0
+ [zure kodea hemen]
+}
+console.log(kontagailu.hurrengoa())
+// -> 0
+console.log(kontagailua.hurrengoa())
+// -> 1
+console.log(kontagailu.hurrengoa())
+// -> 2
+\end{lstlisting}
+
+\item 
+\index{programazio funtzionala}
+map(), filter() eta reduce() programazio funtzionalean asko erabiltzen diren array klaseko hiru metodo dira. Webgune honetan \href{https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d}{https://labur.eus/vGIW4} (medium.com) ikus ditzakezu metodo horien oinarrizko erabileraren adibideak. Horren inguruan zenbait ariketa proposatzen dira.
+
+Honako objektu literala emanik (\hl{biltegia} izenekoa):
+\begin{lstlisting}[language=JavaScript, numbers=none]
+
+const biltegia = [
+ {mota: "garbigailua", balioa: 5000},
+ {mota: "garbigailua", balioa: 650},
+ {mota: "edalontzia", balioa: 10},
+ {mota: "armairua", balioa: 1200},
+ {mota: "garbigailua", balioa: 77}
+]
+
+let guztiraGarbigailuenBalioa = zure kodea hemen;
+
+console.log ( guztiraGarbigailuenBalioa ); // 5727 erantzuna espero da
+\end{lstlisting}
+
+Erabili \hl{filter()} eta \hl{reduce()} biltegiko garbigailuen balio totala lortzeko. 
+
+\item Gezi funtzioa (\textit{arrow function})  \hl{=>} ES6 estandarrak ekarri duen eta oso preziatua  den funtzioa  bat da. Irakurri gehiago beraren inguruan hemen:  \newline \href{https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/}{https://labur.eus/1XZv0} (sitepoint.com).
+
+Jarraian, moldatu hurrengo kodea, \hl{arrow} funtzioa erabili dezan:
+
+\begin{lstlisting}[language=JavaScript, numbers=none]
+biltegia.forEach( function(item) {
+console.log(item.balioa);
+});
+\end{lstlisting}
+
+\item Egin hirugarren ariketaren errefaktorizazioa, \textit{arrow} funtzioa erabil dezan.
+
+
+\end{enumerate}
+

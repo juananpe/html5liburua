@@ -1,0 +1,435 @@
+\chapter{JavaScript bost minututan}
+
+HTML5en arrakasta ez dago sartu dituen HTML etiketa semantiko berrietan oinarrituta, \index{API} JavaScript API berrietan baizik. API horietan murgildu baino lehenago, ezinbestekoa dugu gure JavaScript-en ezagupen herdoilduak apur bat berritu eta garbitzea. Horretarako, atal honetan, JavaScript lengoaiak eskaintzen dituen funtzionalitate nagusiak izango ditugu hizpide. Berriro, jada JavaScript apur bat badakizula onartuko dugu eta soilik HTML5eko APIak ondo erabili ahal izateko  funtzionalitate garrantzitsuenetan sakonduko dugu.
+
+
+\section{Aldagaien erazagupena}
+\index{var}\index{let}\index{const} Nola deklaratu aldagai bat JavaScript-en? Zer erabili, \textit{var}, \textit{let} edo \textit{const}? Galdera hauei erantzuten saiatuko gara, labur-labur.
+
+Orain dela urte batzuk (\textit{let} eta \textit{const} existitzen ez zirenean ere), honela erazagutu behar ziren aldagaiak:
+
+%\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+// Iruzkina
+var zabalera ; // hasieratu gabeko aldagai baten erazagupena
+var txapeldunak = 2;
+var txapeldunak = 4; /* ez da batere gomendagarria aldagai bat ber-erazagutzea, baina 'var' erabiliz, posible da */
+var irakitePuntua = 100;
+var irakitePuntua = "Ehun"; /* aldagai mota dinamikoki alda daiteke. Berriro, ez da batere gomendagarria, baina egin daiteke */
+var nahikoAdin = false;
+var temp = 100, lema = "Kaixo";
+temp = (temp - 12) * 5 / 9;   // Adierazpen matematikoa
+lema = lema + " mundua!"; 
+var pos = Math.random(); 
+
+\end{lstlisting}
+%\end{minipage}
+
+Arau nagusiak hiru dira:
+\begin{itemize}
+\item Aldagaiaren izena hizki batez (edo \_ edo \$ karaktereez) hasten da.
+\item Jarraian, zenbakiak edo hizkiak edo \_ edo \$ karaktereak kateatu daitezke, hainbat aldiz.
+
+\item Hitz erreserbatuak daude (gako-hitzak), erabili ezin direnak:
+
+\fbox{\begin{minipage}{\linewidth}
+abstract, as, boolean, break, byte, case, catch, char, class,
+continue, const, debugger, default, delete, do, double, else, enum,
+export, extends, false, final, finally, float, for, function, goto,
+if, implements, import, in, instanceof, int, interface, is, long,
+namespace, native, new, null, package, private, protected, public,
+return, short, static, super, switch, synchronized, this, throw,
+throws, transient, true, try, typeof, use, var, void, volatile, 
+while, with
+\end{minipage}}
+\end{itemize} 
+
+Gaur egun, \textit{\hlc[lightgray]{var}} ez erabiltzea gomendatzen da. Horren ordez \textit{\hlc[lightgray]{let}} (aldagaiak deklaratzeko) eta \textit{\hlc[lightgray]{const}} (konstanteak erazagutzeko) lehenesten dira. \textit{\hlc[lightgray]{Let}} aldagai bat ezin da birritan erazagutu (saiatuz gero, errore bat jasoko dugu), baina haren balioa, ordea, bai, alda daiteke. \textit{\hlc[lightgray]{Const}} baten kasuan, berriz, ezin da ez berrerazagutu, ezta haren balioa aldatu ere. 
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+// Let
+let zabalera ; // hasieratu gabeko aldagai baten erazagupena
+let txapeldunak = 2;
+let txapeldunak = 4; // ERRORE bat jasoko dugu
+const PI = 3.14;
+PI = 3.1415; // ERRORE BAT jasoko dugu, jada konstantea zehaztuta baitago
+
+\end{lstlisting}
+\end{minipage}
+
+
+
+\section{\textit{While} eta \textit{for} begiztak}
+
+Iterazioak lortzeko (datu-egiturak zeharkatzeko edo baldintza bat betetzen den bitartean kode zati bat exekutatzeko), \textit{while} eta \textit{for} begiztak erabiltzen dira. Noizbait beste programazio-lengoaia batean programatu baduzu, ez duzu inolako arazorik izango kode bloke hauek ulertzeko:
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+var i=0;
+while (i < kafeKop) {
+ kafeaEdan();
+ i = i + 1;
+}
+
+for (var i=0; i < kafeKop; i++){
+ kafeKop();
+}
+\end{lstlisting}
+\end{minipage}
+
+\section{Baldintzazko adierazpenak}
+\textit{if-then-else} baldintzazko adierazpen klasikoa ere beste lengoaia batzuetan bezala erabiltzen da, honako patroiari jarraituz:
+
+\begin{verbatim}
+if (baldintza) {
+   baldintza betetzen denenean exekutatu beharreko kodea
+} else {
+   baldintza betetzen EZ denean exekutatu beharreko kodea
+}
+\end{verbatim}
+
+Adibidez:
+
+%\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+if (nahikoAdin) {
+ emaitza = "Gidatu ahal duzu!";
+} else {
+ emaitza = "Tamalez, oraindik ezin duzu gidatu.";
+}
+\end{lstlisting}
+%\end{minipage}
+
+\section{Arrayak}
+\index{Array}
+Arrrayak datu multzo bat memorian gordetzeko datu-egiturak dira. Adibidez, bost zenbaki gorde nahi baditugu taula izeneko array batean:
+
+%\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let taula = new Array();
+taula[0] = 5.1;
+taula[1] = 6.1;
+taula[2] = -2.5;
+taula[3] = -3;
+taula[4] = -4;
+\end{lstlisting}
+%\end{minipage}
+ 
+
+Edo modu laburrean idatzita (aurrekoaren baliokidea):
+ 
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let taula = [5.1, 6.1, -2.5, -3 -4];
+\end{lstlisting}
+\end{minipage}
+
+ Beste lengoaia batzuetan array baten tamaina finkoa da bai eta gordetzen dituen datu motak ere. JavaScript-en ez da horrela, alegia, array baten tamaina ez da hasiera-hasieratik zehaztu behar (dinamikoa da) eta barruan gordetzen diren balioen datu motak ere ez du zertan berdina izan.
+ 
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+// JavaScript-en arrayak dinamikoak dira.
+// Demagun taula aldagaia erazagutu eta hasieratu dugula
+
+let taula = [];
+// Jarraian, hau eginez gero:
+
+taula[5] = 38; 
+
+// Orain taulan 6 posizio izango ditugu eta 6.ean (0-tik
+// hasten dira indizeak) 38 zenbakia aurkituko dugu. 
+// Tartean, "undefined" elementuak.
+// Beraz, orain taularen luzera eskatuz gero, 6 emango digu
+
+console.log(taula.length); // Emaitza: 6
+
+// zenbakiak gorde baditugu ere, hurrengo posizioan string bat gorde dezakegu, arazorik gabe (eta honekin, berriro, dinamikoki luzatu dugu arrayaren tamaina)
+
+taula[6] = "Sagarra";
+
+console.log(taula); // Emaitza: (7) [empty x 5, 38, "Sagarra"]
+
+\end{lstlisting}
+\end{minipage}
+ 
+% Ikusi dugun bezala, array batek hainbat balio ezberdin aldagai baten barruan gorde ditzake. Balio horiek  indize baten bidez atzitu daitezke:
+% 
+% \begin{minipage}{\linewidth}
+% \begin{lstlisting}[language=JavaScript]
+% let markak = new Array();
+% markak[0]="Saab";
+% markak[1]="Volvo";
+% markak[2]="BMW";
+% \end{lstlisting}
+% \end{minipage}
+% 
+% Badago beste modu laburragoa arrayak zehazteko:
+% 
+% \begin{lstlisting}[language=JavaScript]
+% let markak = new Array("Saab","Volvo", "BMW");
+% \end{lstlisting}
+% 
+% edo literalak erabiliz:
+% \begin{lstlisting}[language=JavaScript]
+% let markak = ["Saab","Volvo", "BMW"];
+% \end{lstlisting}
+% 
+% JavaScript-en array baten barruan gordetzen diren elementuak ez dute zertan datu-mota berdina izan behar:
+% 
+% \begin{minipage}{\linewidth}
+% \begin{lstlisting}
+% let nireArray = new Array();
+% nireArray[0] = Math.random(); // float
+% nireArray[1] = "kate bat"; // string
+% nireArray[2] = markak; // array
+% \end{lstlisting}
+% \end{minipage}
+% 
+
+\index{Array}
+Jarraian, \hl{Array} klaseak eskaintzen dituen beste metodo interesgarri batzuk aztertuko ditugu:
+
+\fbox{\begin{minipage}{\linewidth}
+concat, indexOf, join, lastIndexOf, pop, push, reverse,
+shift, slice, sort, splice, toString, unshift, valueOf
+while, with
+\end{minipage}}
+
+% Length (array-aren luzera) da askotan erabiliko dugun atributu bat. Esaterako, aurreko adibidean:
+
+%\begin{verbatim}
+% nireArray.length // 3 itzuliko du.    
+%\end{verbatim}
+\vspace{5mm} %5mm vertical space
+\index{concat()} Elementuak kateatzeko (\textit{concat}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+
+let batzuk = ["Carlos", "Lierni"];
+let besteak = ["Eneritz", "Tadeo", "Linus"];
+let denak = batzuk.concat(besteak);
+// denak: ["Carlos", "Lierni", "Eneritz", "Tadeo", "Linus"]
+\end{lstlisting}
+\end{minipage}
+
+\index{indexOf()} Elementu baten indizea lortzeko (\textit{indexOf}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let taldeak = ["Athletic", "Barcelona", "Erreala"];
+let ind = taldeak.indexOf("Erreala"); // ind = 2
+\end{lstlisting}
+\end{minipage}
+
+\index{join()} Elementuak lotzeko (\textit{join}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let frutak = ["Banana", "Laranja", "Sagarra", "Mango"];
+let energia = frutak.join(".");
+// energia = "Banana.Laranja.Sagarra.Mango"
+\end{lstlisting}
+\end{minipage}
+
+\index{lastIndexOf()} Elementu batek arrayan duen azken posizioaren indizea lortzeko (\textit{lastIndexOf}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let lengoaiak = ["Pascal", "Ada", "C++", "Java", "JavaScript", "Ada"];
+lengoaiak.lastIndexOf("Ada"); // 5
+\end{lstlisting}
+\end{minipage}
+
+\index{pop()} Arrayaren azken elementua lortzeko eta arraytik ateratzeko (\textit{pop}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let paloak = ["urreak", "kopak", "ezpatak", "bastoiak"];
+paloak.pop(); // "bastoiak"
+// paloak: ["urreak", "kopak", "ezpatak"]
+\end{lstlisting}
+\end{minipage}
+
+\index{shift()} Arrayaren lehen elementua arraytik atera (\textit{shift}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let paloak = ["urreak", "kopak", "ezpatak", "bastoiak"];
+paloak.shift(); // "urreak"
+// paloak: ["kopak", "ezpatak", "bastoiak"]
+\end{lstlisting}
+\end{minipage}
+
+
+\index{push()} Arrayaren azken elementua txertatzeko (\textit{push}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+// push metodoak elementua azken posizioan txertatu eta hori egin ondoren arrayan zenbat elementu dauden bueltatzen du
+let paloak = ["urreak", "kopak", "ezpatak"];
+paloak.push("bastoiak"); // 4
+// paloak: ["urreak", "kopak", "ezpatak", "bastoiak"]
+\end{lstlisting}
+\end{minipage}
+
+\index{reverse()}  Arrayaren elementuak iraultzeko (\textit{reverse}):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+let paloak = ["urreak", "kopak", "ezpatak", "bastoiak"];
+paloak.reverse();
+// paloak : ["bastoiak", "ezpatak", "kopak", "urreak"]
+ 
+\end{lstlisting}
+\end{minipage}
+
+
+Dimentsio anitzeko arrayak ere sor daitezke (alegia, arrayez osatutako arrayak):
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+
+let elementuak = [[1,2],[3,4],[5,6]];
+console.log(elementuak[0][0]); // 1 ematen du
+\end{lstlisting}
+\end{minipage}
+
+10 x 20 elementuz osatutako array bat sortzeko adibidearekin bukatuko dugu:
+
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=JavaScript]
+
+let x = new Array(10);
+ for (let i = 0; i < 10; i++) {
+ x[i] = new Array(20);
+ }
+ 
+ x[5][12] = 3.0;  // elementu bat txertatu (5,12) gelaxkan
+\end{lstlisting}
+\end{minipage}
+ 
+ \section{Ariketak}
+
+
+ Irakurri \hlc[lightgray]{var}, \hlc[lightgray]{let} eta \hlc[lightgray]{const} klausulen arteko ezberdintasunak lantzen dituen dokumentu hau: \\
+ \href{ https://dev.to/sarah\_chima/var-let-and-const--whats-the-difference-69e}{https://dev.to/sarah\_chima/var-let-and-const--whats-the-difference-69e}.
+    
+    \textbf{Adi}! Garatzaileei laguntzeko eta JavaScript-en modu azkarrean gauzak probatu ahal izateko Google Chrome-k bere Chrome DevTools kontsolan \textit{let} aldagaiak behin baino gehiagotan erazagutzen uzten du. Firefox-en lan egiten baduzu, ez da hori gertatuko. Ikus: \href{https://umaar.com/dev-tips/214-redeclare-let-console/}{https://umaar.com/dev-tips/214-redeclare-let-console/}.
+    
+\begin{enumerate}
+    \item Zer lortuko dugu pantailan honakoa idaztean?    
+\begin{lstlisting}[language=JavaScript,numbers=none]
+var tester = "hey hi";
+function newFunction() {
+   var hello = "hello";
+}
+console.log(hello);
+
+\end{lstlisting}
+
+\item Posible al da hau egitea?
+\begin{lstlisting}[language=JavaScript,numbers=none]
+var greeter = "hey hi";
+var greeter = "say Hello instead";   
+    \end{lstlisting}
+
+\item  Posible al da hau egitea errorerik jaso gabe? Baiezkoan, nola deitzen zaio JavaScript-eko
+ezaugarri honi (aldagai baten balioa kodean deklaratu baino lehenago erabiltzeari)?
+\begin{lstlisting}[language=JavaScript,numbers=none]
+console.log (greeter);
+var greeter = "say hello"    
+    \end{lstlisting}
+
+\item  Zer bistaratuko da kontsolan kode hau exekutatzean?
+\begin{lstlisting}[language=JavaScript,numbers=none]
+var ind = 0;
+for(var ind=3; ind<10; ind++); // gorputzik gabeko begizta
+console.log(ind);
+
+\end{lstlisting}
+
+\item Zer inprimatzen da kode honen amaieran?
+(adi, DevTools erabiltzen ari bazara, gogoratu fitxa berri bat irekitzeaz testuinguru berri batetik
+abiatzeko beti)
+
+\begin{lstlisting}[language=JavaScript,numbers=none]
+let ind = 0;
+for(let ind=3; ind<10; ind++); // gorputzik gabeko begizta
+console.log(ind);
+\end{lstlisting}
+
+\item Honakoa egin daiteke errorerik jaso gabe?
+
+\begin{lstlisting}[language=JavaScript,numbers=none]
+let agurra = "Hola";
+let agurra = "Kaixo"
+ \end{lstlisting}
+ 
+ \item  Eta hau?
+\begin{lstlisting}[language=JavaScript,numbers=none]
+var agurra = "Hola";
+var agurra = "Kaixo";
+ \end{lstlisting}
+ 
+ \item  Honakoa egin daiteke errorerik jaso gabe?
+ 
+\begin{lstlisting}[language=JavaScript,numbers=none]
+console.log (greeter);
+let greeter = "say hello";
+ \end{lstlisting}
+ (Adi, ez da 3. ariketaren berdina)
+ 
+ \item Badago errorerik hemen? Zer lortzen dugu pantailan?
+\begin{lstlisting}[language=JavaScript,numbers=none]
+const AGUR="agur!"
+AGUR="adiós!";
+ \end{lstlisting}
+ 
+ \item Badago errorerik hemen? Zer lortzen dugu pantailan?
+\begin{lstlisting}[language=JavaScript,numbers=none]
+const AGUR="agur!";
+if (true){
+ const AGUR="adiós!";
+}
+console.log(AGUR);
+ \end{lstlisting}
+ 
+ \item  Badago errorerik hemen? Zer lortzen dugu pantailan?
+ 
+\begin{lstlisting}[language=JavaScript,numbers=none]
+const hiztegia = {
+ hola : "kaixo",
+ casa : "etxea"
+};
+hiztegia.hola = "iepa!";
+console.log(hiztegia.hola);
+ \end{lstlisting}
+
+\end{enumerate}
+
+Bigarren ariketa multzoan arrayak erabiliko ditugu. Lasai hartu, arrayek JavaScripten badute bere zailtasuna eta.
+ 
+ \begin{enumerate}
+     \item Demagun 3 puntuz osatutako arraya sortu dugula:
+     \begin{lstlisting}[language=JavaScript]
+     
+function Point(x,y){
+ this.x = x;
+ this.y = y;
+}
+let puntuak = [new Point(5,0), new Point(11,1), new Point(2,2)]
+
+\end{lstlisting}
+
+Programa ezazu array horren barruan dauden eta x koordenatua > 10 balioa duten
+puntuak ezabatzeko \textit{script}a. Proba ezazu zure soluzioa array hauekin ere:
+
+\begin{lstlisting}[language=JavaScript]
+let puntuak = [new Point(5,0), new Point(11,1), new Point(15,1), new Point(2,2)];
+let puntuak = [new Point(5,0), new Point(4,1), new Point(5,2), new Point(6,0), new Point(11,1), new Point(15,2)];
+\end{lstlisting}
+
+\item Programa ezazu \textit{script} bat puntuen arraya x koordenatuaren arabera ordenatzeko, goranzko hurrenkera jarraituz.
+\end{enumerate}
