@@ -25,6 +25,6 @@ $ pdflatex main.tex
 $ open main.pdf
 ```
 
-#Lizentzia
+# Lizentzia
 Liburu hau [cc-by-nc-sa](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.eu)  lizentziapean dago (Creative Commons - Aitortu - Ez komertziala - Partekatu Berdin)
 Lizentzia honek lana partekatu eta jendaurrean hedatzeko eskubidea ematen du baita lan eratorriak sortzeko ere. Horretarako derrigorrezkoa da lanaren kredituak aitortzea. Gainera ezin da lan hau (ezta bere eratorriak ere) merkataritza xedeetarako erabili. Azkenik, lan hau aldatz
