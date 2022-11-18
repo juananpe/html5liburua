@@ -39,4 +39,8 @@ Lizentzia honek lana partekatu eta jendaurrean hedatzeko eskubidea ematen du bai
 -   **Zein ekarpen mota onartzen dira?**
     Zuzenketak (ortografikoak, gramatikalak, ...), ariketen soluzioak, kapitulu batentzako gehigarriak, kapitulu berriak (osoak edo zatiak), kapitulu berriak sartzeko proposamenak (proposamen hutsak edo edukien zirriborroekin)
     
+## Eskerrak
 
+Eskerrak UEUko argitalpen zerbitzuari liburua argitaratzeagatik eta webgune honetan zabaltzeko baimena emateagatik.
+
+![image](https://user-images.githubusercontent.com/1078305/202714442-8894aefb-3d5a-4672-9a23-cf24e0a47b34.png)
