@@ -41,6 +41,6 @@ Lizentzia honek lana partekatu eta jendaurrean hedatzeko eskubidea ematen du bai
     
 ## Eskerrak
 
-Eskerrak UEUko argitalpen zerbitzuari liburua argitaratzeagatik eta webgune honetan zabaltzeko baimena emateagatik.
+Eskerrak UEUko argitalpen zerbitzuari liburua argitaratzeagatik eta webgune honetan zabaltzeko baimena emateagatik. Horrelako liburuak askatzeko ekimen gehiago bultzatu nahi baduzu, [paperezko ale bat](http://www.ueu.eus/denda/ikusi/html5_lengoaia_eta_javascript_apiak) eros dezakezu.
 
 ![image](https://user-images.githubusercontent.com/1078305/202714442-8894aefb-3d5a-4672-9a23-cf24e0a47b34.png)
