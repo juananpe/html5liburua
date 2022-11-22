@@ -1,0 +1,32 @@
+name: Pipeline
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 5'
+  workflow_dispatch:
+
+jobs:
+
+
+  LaTeX:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: '🧰 Checkout'
+      uses: actions/checkout@v3
+
+    - name: '📓 Build PDF (pdflatex) on container btdi/latex'
+      run: |
+        docker run --rm -iv $(pwd):/wrk -w /wrk btdi/latex bash <<EOF
+        #!/usr/bin/env bash
+        cd latex
+        pdflatex main.tex
+        pdflatex main.tex
+        EOF
+
+    - name: '📤 Upload artifact: PDF'
+      uses: actions/upload-artifact@v3
+      with:
+        path: latex/main.pdf
