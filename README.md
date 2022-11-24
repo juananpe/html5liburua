@@ -44,7 +44,7 @@ Lizentzia honek lana partekatu eta jendaurrean hedatzeko eskubidea ematen du bai
 -   **Non daude liburuan agertzen diren ariketen PDFak? Eta jatorrizko ODT bertsioak?**
     [https://ikasten.io/html5/](https://ikasten.io/html5/) webgunean aurkituko dituzu, gai bakoitzeko PDF bat.
     Adibidez, Canvas (8. gaiaren) inguruko ariketen [PDFa](https://ikasten.io/html5/ariketak/08_gaia.pdf)
-    Eta horri dagokion [ODT dokumentua](https://ikasten.io/html5/ariketak/08_gaia.odt)
+    Eta horri dagokion [ODT dokumentua](https://ikasten.io/html5/ariketak/08_gaia.odt). Oharra: odt ez badoa, probatu odp luzapenarekin.
     
 ## Eskerrak
 
