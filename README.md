@@ -41,6 +41,11 @@ Lizentzia honek lana partekatu eta jendaurrean hedatzeko eskubidea ematen du bai
 -   **Zein ekarpen mota onartzen dira?**
     Zuzenketak (ortografikoak, gramatikalak, ...), ariketen soluzioak, kapitulu batentzako gehigarriak, kapitulu berriak (osoak edo zatiak), kapitulu berriak sartzeko proposamenak (proposamen hutsak edo edukien zirriborroekin)
     
+-   **Non daude liburuan agertzen diren ariketen PDFak? Eta jatorrizko ODT bertsioak?**
+    [https://ikasten.io/html5/](https://ikasten.io/html5/) webgunean aurkituko dituzu, gai bakoitzeko PDF bat.
+    Adibidez, Canvas (8. gaiaren) inguruko ariketen [PDFa](https://ikasten.io/html5/ariketak/08_gaia.pdf)
+    Eta horri dagokion [ODT dokumentua](https://ikasten.io/html5/ariketak/08_gaia.odt)
+    
 ## Eskerrak
 
 Eskerrak UEUko argitalpen zerbitzuari liburua argitaratzeagatik eta webgune honetan zabaltzeko baimena emateagatik. Horrelako liburuak askatzeko ekimen gehiago bultzatu nahi baduzu, [paperezko ale bat](http://www.ueu.eus/denda/ikusi/html5_lengoaia_eta_javascript_apiak) eros dezakezu.
