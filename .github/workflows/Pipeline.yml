@@ -1,0 +1,51 @@
+name: Pipeline
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 5'
+  workflow_dispatch:
+
+jobs:
+
+
+  LaTeX:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: '🧰 Checkout'
+      uses: actions/checkout@v3
+
+    - name: '📓 Build PDF (pdflatex) on container btdi/latex'
+      run: |
+        docker run --rm -iv $(pwd):/wrk -w /wrk btdi/latex bash <<EOF
+        #!/usr/bin/env bash
+        cd latex
+        pdflatex main.tex
+        pdflatex main.tex
+        EOF
+
+    - name: '📤 Upload artifact: PDF'
+      uses: actions/upload-artifact@v3
+      with:
+        path: latex/main.pdf
+
+    - name: '🚀 Publish to gh-pages'
+      if: github.event_name != 'pull_request'
+      run: |
+        mkdir dist
+        mv latex/main.pdf dist
+        cat > dist/index.html <<EOF
+        <a href="main.pdf">PDF</a>
+        EOF
+
+        cd dist
+        touch .nojekyll
+        git init
+        cp ../.git/config ./.git/config
+        git add .
+        git config --local user.email "push@gha"
+        git config --local user.name "GHA"
+        git commit -a -m "update ${{ github.sha }}"
+        git push -u origin +HEAD:gh-pages
