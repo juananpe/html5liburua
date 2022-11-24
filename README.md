@@ -25,6 +25,8 @@ $ pdflatex main.tex
 $ pdflatex main.tex 
 $ open main.pdf
 ```
+## Nondik jaitsi daiteke liburuaren azkenengo PDF bertsioa
+[PDFa jaitsi](https://ikasten.io/html5/liburua-2022-11-24.pdf)
 
 ## Lizentzia
 
