@@ -37,6 +37,9 @@ Lizentzia honek lana partekatu eta jendaurrean hedatzeko eskubidea ematen du bai
 
 -   **Ekarpen bat egin nahi dut, zein da prozedura?**
     Modurik errazena: [issue bat ireki](https://github.com/juananpe/html5liburua/issues) eta bertan idatzi zure ekarpena. Berehala aztertuko dugu eta ondo badago liburuan txertatuko dugu. Bonus Points: zuzenean LaTeXen idazten baduzu, baina ez da derrigorrezkoa! LibreOffice, Word edo testu hutsean idatzitako ekarpenak ere ongi etorriak izango dira.
+    
+-  **LaTeX edukia editatu nahi dut, nola egin?**
+   Ikus: https://github.com/juananpe/html5liburua/blob/main/CONTRIBUTING.md
    
 -   **Zein ekarpen mota onartzen dira?**
     Zuzenketak (ortografikoak, gramatikalak, ...), ariketen soluzioak, kapitulu batentzako gehigarriak, kapitulu berriak (osoak edo zatiak), kapitulu berriak sartzeko proposamenak (proposamen hutsak edo edukien zirriborroekin)
