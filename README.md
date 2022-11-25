@@ -13,7 +13,7 @@ digital gisa erabilzeko prestatu da.
 
 ## Egilea
 
-Juanan Pereira Varela (Oñati, 1975). Informatikan doktorea. Gaur egun Donostiako Informatika Fakultatean Web Sistemak eta Software Ingeniaritzako irakaslea da. UEUk eta Asmozek antolatutako bi MOOCen ('HTML5 estandarra ikasten' eta 'HTML5 Aurreratua') irakasle izan da. Software ingeniaritzaren arloan [hainbat artikulu](https://scholar.google.com/citations?user=2dBvuskAAAAJ&hl=en) idatzi ditu.
+Juanan Pereira Varela (Oñati, 1975). Informatikan doktorea. Gaur egun UPV/EHUko [Donostiako Informatika Fakultatean](https://www.ehu.eus/eu/web/informatika-fakultatea) Web Sistemak eta Software Ingeniaritzako irakaslea da. UEUk eta Asmozek antolatutako bi MOOCen ('HTML5 estandarra ikasten' eta 'HTML5 Aurreratua') irakasle izan da. Software ingeniaritzaren arloan [hainbat artikulu](https://scholar.google.com/citations?user=2dBvuskAAAAJ&hl=en) idatzi ditu.
 
 ## Nola konpilatu liburua (PDFa sortzeko)
 
