@@ -1,4 +1,4 @@
-# Ekarpenak nola egin
+# LaTeX ekarpenak nola egin
 
 Ekarpenak asko eskertzen ditugu. Berez horregatik erabaki genuen liburua irekitzea, besteak beste.
 
