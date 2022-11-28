@@ -155,20 +155,19 @@ app.post('/bezeroa', function(req, res) {
 
 ez dugu ezer jasoko. Zergatik? Arazoa da POST parametroak bide edo \textit{route} batean sartu baino lehen tratatu egin behar direla. Nabigatzaileak bidaltzen dituen datuak zerbitzarian jaso eta bideratu baino lehen tratatu egin nahi baditugu, \textit{express}-en middleware izeneko funtzioak erabili beharko ditugu.
 
-Middleware bat erabiltzeko, aurreko gaian ikusi dugun lez, \textit{app.use(funtzioa)} erabiliko dugu, bideraketak egin baino lehen. Kasu honetan, \index{body.parser}\textit{body.parser} izeneko middlewarea. Adibidez, POST bidez datozen parametroak tratatzeko:
+Middleware bat erabiltzeko, aurreko gaian ikusi dugunez, \textit{app.use(funtzioa)} erabiliko dugu, bideraketak egin baino lehen. Kasu honetan, \index{body.parser}\textit{body.parser} izeneko middlewarea erabili genezake POST bidez datozen parametroak tratatzeko. Hala ere, ez da beharrezkoa izango, Express 4.16 bertsiotik aurrera, \index{body.parser}\textit{body.parser} middleware hau jada integratuta dago.
+Beraz, nahikoa da ondorengoa egitea:
 
 \begin{lstlisting}[language=JavaScript]
-const bodyParser = require('body-parser')
 // application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 \end{lstlisting}
 
 Horrekin aurreko kodeak ondo funtzionatuko du. 
 
 \begin{lstlisting}[language=JavaScript]
-const bodyParser = require('body-parser')
 // parseatu  application/x-www-form-urlencoded datuak
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.post('/bezeroa', function(req, res) {
     res.send("Bezeroaren izena:" + req.body.izena;
 }
@@ -179,11 +178,7 @@ app.post('/bezeroa', function(req, res) {
 \end{alertinfo}
 
 
-\textit{body-parser} erabili ahal izateko, lehenengo eta behin instalatu egin beharko  dugu:
 
-\begin{lstlisting}[language=JavaScript]
-$ npm install body-parser --save
-\end{lstlisting}
 
 
 % \begin{figure}[ht]
@@ -309,14 +304,14 @@ Bukatzeko, app.get(\textquotesingle{}/\textquotesingle{}) kudeatzailea honela ge
 \begin{lstlisting}[language=JavaScript]
 app.get("/", function(req, res) {
     res.render('index', {
-        'izenburua': 'EJS probatzen'    
+        'izenburua': 'Kaixo EJS txantiloi kudeatzailetik'    
     }) 
 });
 \end{lstlisting}
 
 Txantiloia ondo dabilela probatu baino lehen, \hl{public/} karpetatik \hl{index.html} ezabatu egingo dugu. Ez badugu egiten, \textit{express}-ek hor aurkituko du \textit{index} izeneko orri bat eta hori hobetsiko du txantiloiaren aurrean. 
 
-Dena ondo badoa, \hl{http://localhost:3000} webgunea atzitzean, \ref{fig:txantiloia-ejs}. irudian ikusten dugun emaitza lortu beharko genuke.
+Dena ondo badoa, \hl{http://localhost:3000} webgunea atzitzean, \ref{fig:txantiloia1-ejs}. irudian ikusten dugun emaitza lortu beharko genuke.
 
 \begin{figure}[ht]
 	\centering
@@ -325,7 +320,7 @@ Dena ondo badoa, \hl{http://localhost:3000} webgunea atzitzean, \ref{fig:txantil
    {\includegraphics[trim=0cm 0cm 0cm 0cm, clip=true, width=.75\textwidth]{img/txantiloia-ejs.png}};
 \end{tikzpicture}
 \caption{EJS txantiloiek parametroak onartzen dituzte. Izenburuan ikus dezakegu orri honi pasatu diogun parametroa.}
-\label{fig:txantiloia-ejs}
+\label{fig:txantiloia1-ejs}
 \end{figure}
 
 \subsection{Txantiloiak betetzen}
