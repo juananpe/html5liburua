@@ -58,7 +58,11 @@ PI = 3.1415; // ERRORE BAT jasoko dugu, jada konstantea zehaztuta baitago
 \end{lstlisting}
 \end{minipage}
 
+\begin{alertinfo}{DevTools, let eta const}
 
+ Adi! Garatzaileei laguntzeko eta JavaScript-en modu azkarrean gauzak probatu ahal izateko Google Chrome-k bere Chrome DevTools kontsolan \textit{let} aldagaiak behin baino gehiagotan erazagutzen uzten du. Firefox-en lan egiten baduzu, ez da hori gertatuko. Ikus: \href{https://umaar.com/dev-tips/214-redeclare-let-console/}{https://umaar.com/dev-tips/214-redeclare-let-console/}.
+
+\end{alertinfo}
 
 \section{\textit{While} eta \textit{for} begiztak}
 
@@ -66,17 +70,21 @@ Iterazioak lortzeko (datu-egiturak zeharkatzeko edo baldintza bat betetzen den b
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[language=JavaScript]
-var i=0;
+const kafeKop = 5;
+
+let i=0;
 while (i < kafeKop) {
- kafeaEdan();
+ console.log("Kafea edan")
  i = i + 1;
 }
 
-for (var i=0; i < kafeKop; i++){
- kafeKop();
+for (let i=0; i < kafeKop; i++){
+ console.log("Ebakia edan")
 }
 \end{lstlisting}
 \end{minipage}
+
+Ohar zaitez let erabili dugula i aldagaia erazagutzeko. Hala ere, for begizta blokearen barruan erazagutu duguna aldagai lokala da. Blokea amaitzean aldagai lokal hori ezabatuko da (3. lerroan definituta zegoena aldagai globala da, eta bere balioa mantenduko da).
 
 \section{Baldintzazko adierazpenak}
 \textit{if-then-else} baldintzazko adierazpen klasikoa ere beste lengoaia batzuetan bezala erabiltzen da, honako patroiari jarraituz:
@@ -91,15 +99,21 @@ if (baldintza) {
 
 Adibidez:
 
-%\begin{minipage}{\linewidth}
+\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=JavaScript]
+let emaitza, nahikoAdin = true;
+
 if (nahikoAdin) {
- emaitza = "Gidatu ahal duzu!";
+  emaitza = "Gidatu ahal duzu!";
 } else {
- emaitza = "Tamalez, oraindik ezin duzu gidatu.";
+  emaitza = "Tamalez, oraindik ezin duzu gidatu.";
 }
+
+console.log(emaitza)
 \end{lstlisting}
-%\end{minipage}
+\end{minipage}
+
+Adibidean, \textit{if} blokearen \textit{else} adarretik sartuko gara.
 
 \section{Arrayak}
 \index{Array}
@@ -193,7 +207,6 @@ Jarraian, \hl{Array} klaseak eskaintzen dituen beste metodo interesgarri batzuk 
 \fbox{\begin{minipage}{\linewidth}
 concat, indexOf, join, lastIndexOf, pop, push, reverse,
 shift, slice, sort, splice, toString, unshift, valueOf
-while, with
 \end{minipage}}
 
 % Length (array-aren luzera) da askotan erabiliko dugun atributu bat. Esaterako, aurreko adibidean:
@@ -206,7 +219,6 @@ while, with
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[language=JavaScript]
-
 let batzuk = ["Carlos", "Lierni"];
 let besteak = ["Eneritz", "Tadeo", "Linus"];
 let denak = batzuk.concat(besteak);
@@ -313,11 +325,10 @@ let x = new Array(10);
  \section{Ariketak}
 
 
- Irakurri \hlc[lightgray]{var}, \hlc[lightgray]{let} eta \hlc[lightgray]{const} klausulen arteko ezberdintasunak lantzen dituen dokumentu hau: \\
- \href{ https://dev.to/sarah\_chima/var-let-and-const--whats-the-difference-69e}{https://dev.to/sarah\_chima/var-let-and-const--whats-the-difference-69e}.
+ Irakurri \hlc[lightgray]{var}, \hlc[lightgray]{let} eta \hlc[lightgray]{const} klausulen arteko ezberdintasunak lantzen dituen \href{https://dev.to/sarah\_chima/var-let-and-const--whats-the-difference-69e}{dokumentu hau}\footnote{
+ \href{ https://dev.to/sarah\_chima/var-let-and-const--whats-the-difference-69e}{https://dev.to/sarah\_chima/var-let-and-const--whats-the-difference-69e}}.
     
-    \textbf{Adi}! Garatzaileei laguntzeko eta JavaScript-en modu azkarrean gauzak probatu ahal izateko Google Chrome-k bere Chrome DevTools kontsolan \textit{let} aldagaiak behin baino gehiagotan erazagutzen uzten du. Firefox-en lan egiten baduzu, ez da hori gertatuko. Ikus: \href{https://umaar.com/dev-tips/214-redeclare-let-console/}{https://umaar.com/dev-tips/214-redeclare-let-console/}.
-    
+   
 \begin{enumerate}
     \item Zer lortuko dugu pantailan honakoa idaztean?    
 \begin{lstlisting}[language=JavaScript,numbers=none]
@@ -412,9 +423,37 @@ console.log(hiztegia.hola);
 Bigarren ariketa multzoan arrayak erabiliko ditugu. Lasai hartu, arrayek JavaScripten badute bere zailtasuna eta.
  
  \begin{enumerate}
+
+   \item \textbf{Slice} metodoa. Hurrengo kodea aztertu. Zer lortzen dugun sliceArr aldagaian? arr aldagaia aldatu egin da?
+   
+   \begin{lstlisting}[language=JavaScript,numbers=none]
+   const arr = [1, 2, 3, 4, 5];
+   const slicedArr = arr.slice(1, 4);
+   \end{lstlisting}
+
+   \item \textbf{Splice} metodoa. Hurrengo kodea aztertu. Zer lortzen dugun splicedOut aldagaian? arr aldagaia aldatu egin da?
+   
+   \begin{lstlisting}[language=JavaScript,numbers=none]
+   const arr = [1, 2, 3, 4, 5];
+  const splicedOut = arr.splice(1, 2, 'a', 'b');
+  \end{lstlisting}
+
+  \item \textbf{Unshift} metodoa. Hurrengo kodea aztertu. Zer lortzen dugun newLength aldagaian? eta anotherLength aldagaian? arr aldagaia aldatu egin da?
+   \begin{lstlisting}[language=JavaScript,numbers=none]
+  const arr = [2, 3, 4];
+  const newLength = arr.unshift(1); 
+  const anotherLength = arr.unshift(-2, -1, 0);
+  \end{lstlisting}
+
+  \item \textbf{toString} metodoa. Hurrengo kodea aztertu. 
+  Zein da kontsolan lortzen dugun emaitza?
+   \begin{lstlisting}[language=JavaScript,numbers=none]
+    let paloak = ["urreak", "kopak", "ezpatak", "bastoiak"]
+    paloak.toString()
+   \end{lstlisting}
+  
      \item Demagun 3 puntuz osatutako arraya sortu dugula:
      \begin{lstlisting}[language=JavaScript]
-     
 function Point(x,y){
  this.x = x;
  this.y = y;
