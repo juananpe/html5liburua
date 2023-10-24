@@ -28,7 +28,7 @@ lizentzia: momentuz hutsik
 Jarraian, \textit{express} eta haren mendekotasun guztiak instalatuko ditugu:
 
 \begin{lstlisting}[language=Bash,numbers=none]
-$ npm install express --save
+$ npm install express 
 \end{lstlisting}
 
 Bukatzeko, HTTP zerbitzari sinple bat programatuko dugu:
@@ -37,7 +37,6 @@ Bukatzeko, HTTP zerbitzari sinple bat programatuko dugu:
 // app.js fitxategia
 
 let express = require('express');
-let path = require('path');
 
 let app = express();
 app.listen( 3000, function() {
@@ -63,9 +62,10 @@ app.get("/", function(req, res) {
 
 Orain bai, URL bera eskatzean (http://localhost:3000/), ``Kaixo mundua!'' mezua jasoko dugu erantzun gisa.
 
-\begin{alertinfo}{Zer da \texttt{-{}-}save aukera?}
-  \index{--save}\texttt{-{}-}save aukerarekin instalatu nahi dugun paketea package.json fitxategian mendekotasun gisa idatzi nahi dugula zehazten dugu. \texttt{-{}-}save aukera erabili ezean, mendekotasun-paketea gure ordenagailuan instalatuko da, baina ez dugu horren berri izango package.json fitxategian (alegia, beste garatzaileek ez dute jakingo mendekotasun hau gure aplikaziorako beharrezkoa dela).
-\end{alertinfo}
+%
+%\begin{alertinfo}{Zer da \texttt{-{}-}save aukera?}
+%  \index{--save}\texttt{-{}-}save aukerarekin instalatu nahi dugun paketea package.json fitxategian mendekotasun gisa idatzi nahi dugula zehazten dugu. \texttt{-{}-}save aukera erabili ezean, mendekotasun-paketea gure ordenagailuan instalatuko da, baina ez dugu horren berri izango package.json fitxategian (alegia, beste garatzaileek ez dute jakingo mendekotasun hau gure aplikaziorako beharrezkoa dela).
+%\end{alertinfo}
 
 \section{Baliabide estatikoak}
 
@@ -80,7 +80,6 @@ app.use(express.static('public'))
 Adibide gisa, \textit{public} karpetan orri estatiko hau utziko dugu, inprimaki sinple batekin, \textit{post.html} izenarekin:
 
 \begin{lstlisting}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,11 +100,48 @@ Nabigatzailean orri hori atzitzeko hurrengo URLa idatziko dugu:
 
 Ohart zaitez URLan ez dugula \hl{public/post.html} idatzi. \textit{Express}-ek badaki besterik ezean, HTML orriaren fitxategi estatikoak public/ karpetan egon behar duela.
 
+
+\section{POST parametroak}\index{POST}
+
+Inprimaki baten datuak orokorrean POST bidez bidaltzen dira, ez GET bidez. Nola jaso POST balio horiek zerbitzarian? Eskaera (\textit{request}) baten \textit{body} atributuan daude parametro hauek. Adibidez, \index{req.body}\textit{req.body.izena}. Baina, besterik gabe, hau inplementatzen badugu:
+
+\begin{lstlisting}
+app.post('/bezeroa', function(req, res) {
+    res.send("Bezeroaren izena:" + req.body.izena;
+}
+\end{lstlisting}
+
+ez dugu ezer jasoko. Zergatik? Arazoa da POST parametroak bide edo \textit{route} batean sartu baino lehen tratatu egin behar direla. Nabigatzaileak bidaltzen dituen datuak zerbitzarian jaso eta bideratu baino lehen tratatu egin nahi baditugu, \textit{express}-en middleware izeneko funtzioak erabili beharko ditugu.
+
+Middleware bat erabiltzeko, aurreko gaian ikusi dugun lez, \textit{app.use(funtzioa)} erabiliko dugu, bideraketak egin baino lehen. Kasu honetan, \index{express.urlencoded}\textit{express.urlencoded} izeneko middlewarea. Adibidez, POST bidez datozen parametroak tratatzeko:
+
+\begin{lstlisting}[language=JavaScript]
+// application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+\end{lstlisting}
+
+Horrekin aurreko kodeak ondo funtzionatuko du. 
+
+\begin{lstlisting}[language=JavaScript]
+// parseatu  application/x-www-form-urlencoded datuak
+app.use(express.urlencoded({ extended: true }));
+app.post('/bezeroa', function(req, res) {
+    res.send("Bezeroaren izena:" + req.body.izena;
+}
+\end{lstlisting}
+
+\begin{alertinfo}{x-www-form-urlencoded}
+\ref{fig:form-urlencoded}. irudian ikusten dugunez, form baten datuak POST bidez bidaltzean, besterik ezean, HTTP eskaeraren eduki mota (Content-Type) application/x-www-form-urlencoded izango da.
+
+Bestalde, urlencoded parametroak tratatzeko bi liburutegi daude: querystring eta qs. \textit{ express.urlencoded({ extended: true })} aukerarekin qs erabili nahi dugula esaten dugu. Bestalde, extended: false erabiliz gero, querystring liburutegia erabiliko dugula adierazten dugu. Ikus: \href{https://github.com/expressjs/body-parser\#extended}{https://github.com/expressjs/body-parser\#extended}
+\end{alertinfo}
+
 \section{GET parametroak URLan bidaltzen}
 
 Nola bidali ahal diogu gure \textit{express} aplikazioari GET parametro bat? Alegia, demagun horrelako URL bat idatzita: http://localhost:3000/bezeroa/Oihane zerbitzariak eskaera jaso eta ``Kaixo Oihane'' mezuarekin erantzun behar duela (ikus \ref{fig:urlparametroak}. irudia). URLan agertzen den izena jasotzeko \textit{req.params}\index{req.params} objektua erabiliko dugu, honela:
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 app.get('/bezeroa/:izena', function(req, res) {
   res.send("Bezeroaren izena: " + req.params.izena);
 });
@@ -128,57 +164,28 @@ GET metodoan parametroak URLan bi modutara bidal daitezke: URL bidearen parte iz
 
 Eskaera-parametro horiek jasotzeko, \textit{req.params}\index{req.params} erabili ordez, \textit{req.query}\index{req.query} erabiliko dugu. Adibidez:
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 app.get('/bezeroa', function(req, res) {
   res.send("Bezeroaren izena: " + req.query.izena);
 });
 \end{lstlisting}
 
-Parametro bat baino gehiago bidali nahi izanez gero, aldagaiak \hl{\&} karaktereaz banatuko ditugu, honela: \href{http://localhost:3000/bezeroa/?izena=Oihane\&abizena=Pereira}{http://localhost:3000/bezeroa/?izena=Oihane\&abizena=Pereira}.
+Parametro bat baino gehiago bidali nahi izanez gero, aldagaiak \hl{\&} karaktereaz banatuko ditugu, honela: \href{http://localhost:3000/bezeroa/?izena=Oihane\&abizena=Agirre}{http://localhost:3000/bezeroa/?izena=Oihane\&abizena=Agirre}.
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 app.get('/bezeroa', function(req, res) {
-  res.send("Bezeroaren izena: " + req.query.izena);
-  res.send("Bezeroaren abizena: " + req.query.abizena);
+  res.send(`Bezeroaren izena: ${req.query.izena} ${req.query.abizena}`);
 });
 \end{lstlisting}
 
-\section{POST parametroak}\index{POST}
-
-Inprimaki baten datuak orokorrean POST bidez bidaltzen dira, ez GET bidez. Nola jaso POST balio horiek zerbitzarian? Eskaera (\textit{request}) baten \textit{body} atributuan daude parametro hauek. Adibidez, \index{req.body}\textit{req.body.izena}. Baina, besterik gabe, hau inplementatzen badugu:
-
-\begin{lstlisting}
-app.post('/bezeroa', function(req, res) {
-    res.send("Bezeroaren izena:" + req.body.izena;
-}
-\end{lstlisting}
-
-ez dugu ezer jasoko. Zergatik? Arazoa da POST parametroak bide edo \textit{route} batean sartu baino lehen tratatu egin behar direla. Nabigatzaileak bidaltzen dituen datuak zerbitzarian jaso eta bideratu baino lehen tratatu egin nahi baditugu, \textit{express}-en middleware izeneko funtzioak erabili beharko ditugu.
-
-Middleware bat erabiltzeko, aurreko gaian ikusi dugunez, \textit{app.use(funtzioa)} erabiliko dugu, bideraketak egin baino lehen. Kasu honetan, \index{body.parser}\textit{body.parser} izeneko middlewarea erabili genezake POST bidez datozen parametroak tratatzeko. Hala ere, ez da beharrezkoa izango, Express 4.16 bertsiotik aurrera, \index{body.parser}\textit{body.parser} middleware hau jada integratuta dago.
-Beraz, nahikoa da ondorengoa egitea:
-
-\begin{lstlisting}[language=JavaScript]
-// application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }))
-\end{lstlisting}
-
-Horrekin aurreko kodeak ondo funtzionatuko du. 
-
-\begin{lstlisting}[language=JavaScript]
-// parseatu  application/x-www-form-urlencoded datuak
-app.use(express.urlencoded({ extended: true }))
-app.post('/bezeroa', function(req, res) {
-    res.send("Bezeroaren izena:" + req.body.izena;
-}
-\end{lstlisting}
-
-\begin{alertinfo}{x-www-form-urlencoded}
-\ref{fig:form-urlencoded}. irudian ikusten dugunez, form baten datuak POST bidez bidaltzean, besterik ezean, HTTP eskaeraren eduki mota (Content-Type) application/x-www-form-urlencoded izango da.
-\end{alertinfo}
 
 
 
+%\textit{body-parser} erabili ahal izateko, lehenengo eta behin instalatu egin beharko  dugu:
+
+%\begin{lstlisting}[language=JavaScript]
+%$ npm install body-parser --save
+%\end{lstlisting}
 
 
 % \begin{figure}[ht]
@@ -212,13 +219,13 @@ app.post('/bezeroa', function(req, res) {
 \section{Nodemon}\index{nodemon}
 Orain arte \hl{index.js} edo beste edozein JS fitxategitan aldaketa bat egitean, \textit{express} zerbitzaria itzali eta berriro martxan jarri behar izan dugu, aldaketak har zitzan. Baina edizio-prozesu hori oso astuna bilaka daiteke. Hoberena izango litzateke modulu bat izatea JS fitxategietan aldaketak automatikoki antzematen dituena eta berak bakarrik zerbitzaria berrabiarazten duena. Hori da, hain zuzen ere, \hl{nodemon} izeneko tresnaren zeregina. nodemon instalatzeko npm erabiliko dugu:
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 $ npm install -g nodemon    
 \end{lstlisting}
 
 -g parametroak instalazio globala egin nahi dugula adierazten du. Hortik aurrera, erabiltzaile guztiek eskuragarri izango dute nodemon aplikazioa, ez soilik uneko erabiltzaileak. Behin instalatuta erabili egingo dugu:
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 $ nodemon index.js
 \end{lstlisting}
 
@@ -229,46 +236,45 @@ Web garapenean diharduten enpresetan web programatzaileak eta web diseinatzailea
 
 Lehenengo eta behin, \textit{ejs} instalatu egin behar da:
 
-\begin{lstlisting}
-$ npm install ejs  --save
+\begin{lstlisting}[numbers=none]
+$ npm install ejs 
 \end{lstlisting}
 
 Jarraian, txantiloiak kudeatzeko ejs erabiliko dugula zehaztuko dugu (9. lerroan):
 
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}[language=JavaScript,numbers=none]
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser')
 
 const app = express();
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 \end{lstlisting}
 
-10. lerroan txantiloiak zer karpetatan gordeko ditugun adierazten da (lerro horrek \textit{path} moduluarekin mendekotasun bat dauka, horregatik inportatu behar dugu 2. lerroan)
+Azkenengo lerroan txantiloiak zer karpetatan gordeko ditugun adierazten da (lerro horrek \textit{path} moduluarekin mendekotasun bat dauka, horregatik inportatu behar dugu 2. lerroan)
 
 Orain, erro-katalogoa eskatzean, ez dugu zuzenean ``Kaixo mundua!'' katearekin erantzungo:
 
-\begin{lstlisting}[language=JavaScript]
-app.get("/", function(req, res) {
+\begin{lstlisting}[language=JavaScript, numbers=none]
+app.get("/", (req, res) => {
     res.send("Kaixo mundua!");
 });
 \end{lstlisting}
 
 baizik eta, horren ordez, \hl{index.ejs} txantiloia bidaliko dugu:
 
-\begin{lstlisting}
-app.get("/", function(req, res) {
+\begin{lstlisting}[language=JavaScript, numbers=none]
+app.get("/", (req, res) => {
     res.render('index');
 });
 \end{lstlisting}
 
 \hl{index.ejs} txantiloiaren edukian \ref{fig:ejs}. irudian daukagun kodea sartuko dugu, hots:
 
-\begin{lstlisting}
+\begin{lstlisting}[numbers=none]
 <!doctype html>
 <html lang="en">
 <head>
@@ -304,14 +310,14 @@ Bukatzeko, app.get(\textquotesingle{}/\textquotesingle{}) kudeatzailea honela ge
 \begin{lstlisting}[language=JavaScript]
 app.get("/", function(req, res) {
     res.render('index', {
-        'izenburua': 'Kaixo EJS txantiloi kudeatzailetik'    
+        'izenburua': 'EJS probatzen'    
     }) 
 });
 \end{lstlisting}
 
 Txantiloia ondo dabilela probatu baino lehen, \hl{public/} karpetatik \hl{index.html} ezabatu egingo dugu. Ez badugu egiten, \textit{express}-ek hor aurkituko du \textit{index} izeneko orri bat eta hori hobetsiko du txantiloiaren aurrean. 
 
-Dena ondo badoa, \hl{http://localhost:3000} webgunea atzitzean, \ref{fig:txantiloia1-ejs}. irudian ikusten dugun emaitza lortu beharko genuke.
+Dena ondo badoa, \hl{http://localhost:3000} webgunea atzitzean, \ref{fig:txantiloia-ejs}. irudian ikusten dugun emaitza lortu beharko genuke.
 
 \begin{figure}[ht]
 	\centering
@@ -320,14 +326,14 @@ Dena ondo badoa, \hl{http://localhost:3000} webgunea atzitzean, \ref{fig:txantil
    {\includegraphics[trim=0cm 0cm 0cm 0cm, clip=true, width=.75\textwidth]{img/txantiloia-ejs.png}};
 \end{tikzpicture}
 \caption{EJS txantiloiek parametroak onartzen dituzte. Izenburuan ikus dezakegu orri honi pasatu diogun parametroa.}
-\label{fig:txantiloia1-ejs}
+\label{fig:txantiloia-ejs}
 \end{figure}
 
 \subsection{Txantiloiak betetzen}
 
 Demagun hiru bezeroren datuak ditugula:
 
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}[language=JavaScript, numbers=none]
 let bezeroak = [
     {
         id: 1,
@@ -352,7 +358,7 @@ let bezeroak = [
 
 Orain, datu horiek web orrian bistaratu nahi baditugu, parametro gisa pasa behar dizkiogu \hl{index.ejs} txantiloiari:
 
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}[language=JavaScript, numbers=none]
 app.get("/", function(req, res) {
     res.render('index', {
         'izenburua': 'EJS probatzen',
@@ -363,7 +369,7 @@ app.get("/", function(req, res) {
 
 Eta index.ejs txantiloian datuak zeharkatu, \textit{forEach}\index{forEach} egitura erabiliz:
 
-\begin{lstlisting}[language=HTML]
+\begin{lstlisting}[language=HTML, numbers=none]
 <!doctype html>
 <html lang="en">
 <head>
@@ -377,8 +383,7 @@ Eta index.ejs txantiloian datuak zeharkatu, \textit{forEach}\index{forEach} egit
         <li><%=bezeroa.izena %> <%=bezeroa.abizena%></li>
         <% }) %>
     </ul>
-</body>
-</html>
+</body></html>
 \end{lstlisting}
 
 Dena ondo badoa, \hl{http://localhost:3000/} helbidean sartzean, \ref{fig:txantiloia-ejs}. irudiaren emaitza ikusiko dugu.
@@ -393,6 +398,14 @@ Dena ondo badoa, \hl{http://localhost:3000/} helbidean sartzean, \ref{fig:txanti
 \label{fig:txantiloia-ejs}
 \end{figure}
 
-\section{Ariketa}
-Prestatu inprimaki bat \hl{index.ejs} txantiloian, bezero berri baten datuak (izena, abizena eta helbide elektronikoa) zerbitzarira POST bidez bidaltzeko. Zerbitzariak datuak jaso eta pantailan bistaratuko ditu. 
+\section{Ariketak}
+
+\begin{itemize}
+    \item Prestatu inprimaki bat \hl{index.ejs} txantiloian, bezero berri baten datuak (izena, abizena eta helbide elektronikoa) zerbitzarira POST bidez bidaltzeko. Zerbitzariak datuak jaso eta pantailan bistaratuko ditu. 
+    \item Bezero bakoitzaren ondoan [x] ikurra idatzi. [x] horretan klik egitean bezero hori bezero zerrendatik ezabatu eta zerrenda berria pantailaratu.
+
+    Espero den emaitza ondo ulertzeko, ikus \href{https://youtu.be/2zE4M5HSJRY}{https://youtu.be/2zE4M5HSJRY}
+\end{itemize}
+
+
 
