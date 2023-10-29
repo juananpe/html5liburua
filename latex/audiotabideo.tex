@@ -159,7 +159,18 @@ Zure nabigatzaileak ez du audio etiketa onartzen.
 </audio>
 \end{lstlisting}
 
-Ogg motako kontainerra ez bada onartzen, orduan MP3 kontainer mota duen audioarekin saiatuko gara. Horrekin ere ezin badu nabigatzaileak, orduan errore-mezu bat emango dugu. Ohart zaitez \textit{controls} atributua ere erabiltzen ari garela, \textit{<video>} etiketan egin genuen bezala.
+Ogg motako kontainerra ez bada onartzen, orduan MP3 kontainer mota duen audioarekin saiatuko gara. Horrekin ere ezin badu nabigatzaileak, orduan errore-mezu bat emango dugu. Ohart zaitez \textit{controls} atributua ere erabiltzen ari garela (ikus \ref{fig:audiocontrols}. irudia).
+
+\begin{figure}[ht]
+	\centering
+\begin{tikzpicture}
+\node[anchor=south west,inner sep=0] (image) at (0,0)
+   {\includegraphics[trim=0cm 0cm 0cm 0cm, clip=true, width=0.75\textwidth]{img/audiobideo/audiocontrols.png}};
+\end{tikzpicture}
+\caption{Audio player-a, hainbat kontrolekin.}
+\label{fig:audiocontrols}
+\end{figure}
+
 
 Nabigatzaileek audio-formatuekin duten bateragarritasun-maila jakin ahal izateko badugu Wikipedian orri berezi bat ere\footnote{\href{http://en.wikipedia.org/wiki/HTML5\_Audio}{http://en.wikipedia.org/wiki/HTML5\_Audio}}.
 
@@ -291,8 +302,18 @@ zuri-beltza.putImageData(frame, 0, 0);
 
 Ariketaren soluzioa begiratu gabe egiten saia zaitez, baina argibideren bat behar baduzu, hona hemen: \href{https://juananpe.github.io/txuribeltz/}{https://juananpe.github.io/txuribeltz/}.
 
+\end{itemize}
+
 \item Audio-ariketa batekin jarraituko dugu. Hiru fitxategiz osatutako array bat dugularik:
 \textit{[\textquotesingle{}audio1.mp3\textquotesingle{}, \textquotesingle{}audio2.mp3\textquotesingle{}, \textquotesingle{}audio3.mp3\textquotesingle{}]}, programa ezazu script bat hiru audio horiek jotzeko, bata bestearen atzetik. Bukatzean, lehenengoarekin jarraitu, amaigabeko begizta batean.
-\end{itemize}
+
+\item Web orri bat prestatu <audio> elementuarekin, baina \textit{controls} atributurik gabe (ez dira audio kontrolatzeko botoiak agertuko). Sortu 4 botoia: play, pause, bolumena igo eta bolumena jaisteko.
+JavaScript erabili audioa jotzeko eta kontrolatzeko. Adibidez, erabiltzaileak play botoia sakatzean, audioa martxan jarri behar da (eta play botoia desgaitu behar da). Pause botoian sakatzean audioa eten egin behar da eta play botoia berriro gaitu. Argibidea: aztertu play(), pause() funtzioak, eta audio elementuaren volume atributuak.
+
+\item Audio elementu batean hainbat source jarri daitezkela ikusi dugu. Horietatik nabigatzaileak bat aukeratuko du (onartzen duen lehenengo codec-a, adibidez). Baina nola jakin dezakegu zein izan den nabigatzaileak aukeratu duen audio mota? Argibidea: aztertu audio elementuaren loadeddata gertaera eta currentSrc atributua.
+
+\item Fast Forward (FF) botoia gehitu. Botoia sakatzean audioaren uneko posizioa 10 segundu aurreratuko da.
+
+\item Uneko posizioa bistaratzen duen geruza gehitu. Bertan uneko posizioa (minutu:segundu) eta audioaren iraupena uneoro bistaratu behar da. Argibidea: setInterval edo hobe, audioaren timeupdate gertaera kudeatuz lortuko duzu.
 
 \end{enumerate}
