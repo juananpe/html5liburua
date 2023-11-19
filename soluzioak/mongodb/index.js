@@ -100,7 +100,8 @@ app.get('/bezeroa/editatu/:id', function(req, res) {
     })
 });
 
+const port = process.env.PORT || 3000;
 
-app.listen( 3000, function() {
-    console.log("Zerbitzaria 3000 portuan entzuten");
+app.listen( port, function() {
+    console.log(`Zerbitzaria ${port} portuan entzuten`);
 })
